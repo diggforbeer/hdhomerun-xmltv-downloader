@@ -1,0 +1,39 @@
+# Ignore Python cache and build artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore virtual environments
+.venv/
+venv/
+ENV/
+
+# Ignore Docker build output
+*.log
+cron.log
+
+# Ignore temp and backup files
+*.tmp
+*.bak
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore shell and batch scripts for publishing
+publish.bat
+
+# Ignore IDE/editor folders
+.vscode/
+.idea/
+
+# Ignore environment files
+.env
+
+# Ignore guide output files
+OTA.xml
+OTA.xml.tmp
+
+# Ignore backup directories
+backups/

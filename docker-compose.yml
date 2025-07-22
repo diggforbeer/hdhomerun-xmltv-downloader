@@ -1,0 +1,18 @@
+version: '3.8'
+services:
+  hdhomerun-xmltv:
+    image: xmltvfromhdhomerun:latest
+    container_name: hdhomerun-xmltv
+    environment:
+      - SCRIPT_DIR=/mnt/cache/appdata/tvguidegetter
+      - PLEX_XML_PATH=/mnt/cache/appdata/Plex/OTA.xml
+      - JELLYFIN_XML_PATH=/mnt/cache/appdata/jellyfin/OTA.xml
+      - SCRIPT_NAME=HDHomeRunEPG_To_XmlTv.py
+      - SCRIPT_URL=https://raw.githubusercontent.com/IncubusVictim/HDHomeRunEPG-to-XmlTv/main/HDHomeRunEPG_To_XmlTv.py
+      - SYSLOG_SCRIPT_NAME=EPG_Updater
+      - HDHOMERUN_IP=10.2.0.128
+      - FILE_OWNER=nobody:users
+      - MAX_BACKUPS=5
+    volumes:
+      - C:\appdata:/mnt/cache/appdata
+    restart: unless-stopped
