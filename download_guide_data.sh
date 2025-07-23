@@ -146,7 +146,7 @@ main() {
     
     check_lock
     
-    local required_cmds=(curl python3 cmp logger chown cp mktemp stat find xargs)
+    local required_cmds=(curl python cmp logger chown cp mktemp stat find xargs)
     for cmd in "${required_cmds[@]}"; do
         if ! command -v "$cmd" &>/dev/null; then
             error "Required command '$cmd' not found"
@@ -173,9 +173,9 @@ main() {
     fi
 
     info "Verifying Python dependencies..."
-    if ! python3 -c "import requests" &>/dev/null; then
+    if ! python -c "import requests" &>/dev/null; then
         info "'requests' module not found. Attempting to install with pip..."
-        if python3 -m pip install requests; then
+        if python -m pip install requests; then
             info "'requests' installed successfully."
         else
             error "Failed to install 'requests' with pip. Please install it manually and try again."
@@ -193,7 +193,7 @@ main() {
     
     while [[ $attempt -le $retries ]]; do
         # <<< CRITICAL CHANGE HERE: Use --filename instead of --output
-        if python_output=$(python3 "$LOCAL_SCRIPT_PATH" --host "$HDHOMERUN_IP" --filename "$TMP_XML_PATH" 2>&1); then
+        if python_output=$(python "$LOCAL_SCRIPT_PATH" --host "$HDHOMERUN_IP" --filename "$TMP_XML_PATH" 2>&1); then
             info "Python script completed successfully on attempt $attempt."
             if [ -s "$TMP_XML_PATH" ]; then
                 info "Temporary EPG file created successfully at ${TMP_XML_PATH}."
