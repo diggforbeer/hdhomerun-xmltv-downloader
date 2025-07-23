@@ -1,3 +1,5 @@
+# Export environment variables for cron
+RUN printenv | grep -E 'SCRIPT_DIR|PLEX_XML_PATH|JELLYFIN_XML_PATH|SCRIPT_NAME|SCRIPT_URL|SYSLOG_SCRIPT_NAME|HDHOMERUN_IP|FILE_OWNER|MAX_BACKUPS' > /etc/environment
 # Use an official Python base image
 FROM python:3.13-slim
 
@@ -21,7 +23,7 @@ RUN chmod +x /app/download_guide_data.sh
 RUN pip install --no-cache-dir -r /app/requirements.txt
 
 # Add crontab entry to run script every 6 hours
-RUN echo "*/5 * * * * echo '[CRON] Running guide update at $(date)' | tee /proc/1/fd/1; /app/download_guide_data.sh 2>&1 | tee -a /app/cron.log | tee /proc/1/fd/1" > /etc/cron.d/epg_update
+RUN echo "*/5 * * * * . /etc/environment; echo '[CRON] Running guide update at $(date)' | tee /proc/1/fd/1; /app/download_guide_data.sh 2>&1 | tee -a /app/cron.log | tee /proc/1/fd/1" > /etc/cron.d/epg_update
 RUN chmod 0644 /etc/cron.d/epg_update
 RUN crontab /etc/cron.d/epg_update
 
