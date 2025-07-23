@@ -1,7 +1,8 @@
-# Export environment variables for cron
-RUN printenv | grep -E 'SCRIPT_DIR|PLEX_XML_PATH|JELLYFIN_XML_PATH|SCRIPT_NAME|SCRIPT_URL|SYSLOG_SCRIPT_NAME|HDHOMERUN_IP|FILE_OWNER|MAX_BACKUPS' > /etc/environment
+
 # Use an official Python base image
 FROM python:3.13-slim
+# Export environment variables for cron
+RUN printenv | grep -E 'SCRIPT_DIR|PLEX_XML_PATH|JELLYFIN_XML_PATH|SCRIPT_NAME|SCRIPT_URL|SYSLOG_SCRIPT_NAME|HDHOMERUN_IP|FILE_OWNER|MAX_BACKUPS' > /etc/environment
 
 # Install required packages
 RUN apt-get update && apt-get install -y \
