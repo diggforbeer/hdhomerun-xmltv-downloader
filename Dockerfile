@@ -21,7 +21,7 @@ RUN chmod +x /app/download_guide_data.sh
 RUN pip install --no-cache-dir -r /app/requirements.txt
 
 # Add crontab entry to run script every 6 hours
-RUN echo "*/5 * * * * echo \"[CRON] Running guide update at \$(date)\"; /app/download_guide_data.sh >> /app/cron.log 2>&1" > /etc/cron.d/epg_update
+RUN echo "*/5 * * * * echo '[CRON] Running guide update at $(date)' | tee /proc/1/fd/1; /app/download_guide_data.sh >> /app/cron.log 2>&1" > /etc/cron.d/epg_update
 RUN chmod 0644 /etc/cron.d/epg_update
 RUN crontab /etc/cron.d/epg_update
 
